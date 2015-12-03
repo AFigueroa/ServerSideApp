@@ -1,3 +1,6 @@
 {
-    "directory": "public/vendor"
+    "directory": "public/vendor",
+    "scripts": {
+        "postinstall": "gulp wiredep"
+    }
 }

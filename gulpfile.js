@@ -28,7 +28,7 @@ gulp.task('vet', function () {
 });
 
 //@ styles
-gulp.task('styles', ['clean-styles'], function () {
+gulp.task('styles', ['clean-styles'], function (done) {
 
     'use strict';
     log('Compiling Stylus --> CSS');
@@ -36,11 +36,14 @@ gulp.task('styles', ['clean-styles'], function () {
     return gulp
         .src(config.stylus)
         .pipe($.if(args.verbose, $.print()))
+        .pipe($.plumber())
         .pipe($.stylus({
             compress: true
         }))
         //.pipe($.autoprefixer({browsers: ['last 2 versions', '> 5%']}))
         .pipe(gulp.dest(config.cssDir));
+    
+    done();
 });
 
 //@ clean-styles
@@ -53,6 +56,37 @@ gulp.task('clean-styles', function (done) {
     clean(files, done);
     done();
     
+});
+
+//@ stylus-watcher
+gulp.task('stylus-watcher', function(){
+    
+    gulp.watch([config.stylus], ['styles']);
+    
+});
+
+gulp.task('wiredep', function(){
+    
+    log("Wire up the bower CSS and JS");
+    
+    var options = config.getWiredepDefaultOptions(),
+        wiredep = require('wiredep').stream;
+    
+    return gulp
+        .src(config.jade)
+        .pipe(wiredep(options))
+        .pipe($.inject(gulp.src(config.js)))
+        .pipe(gulp.dest(config.layoutTmps))
+});
+
+gulp.task('inject', ['wiredep', 'styles'], function(){
+    
+    log("Wire up the custom CSS into the html, and call wiredep");
+
+    return gulp
+        .src(config.jade)
+        .pipe($.inject(gulp.src(config.css)))
+        .pipe(gulp.dest(config.layoutTmps))
 });
 
 ///////////
