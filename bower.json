@@ -1,0 +1,16 @@
+{
+  "name": "Jade",
+  "description": "Showcase a MEAN stack app which uses Jade as it's templating engine.",
+  "main": "index.js",
+  "authors": [
+    "Antonio Figueroa"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "toastr": "~2.1.2"
+  }
+}

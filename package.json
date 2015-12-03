@@ -1,0 +1,33 @@
+{
+  "name": "Jade",
+  "version": "0.0.0",
+  "description": "Showcase a MEAN stack app which uses Jade as it's templating engine.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Antonio Figueroa",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "jade": "^1.11.0",
+    "morgan": "^1.6.1",
+    "stylus": "^0.52.4"
+  },
+  "devDependencies": {
+    "del": "^2.1.0",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-if": "^2.0.0",
+    "gulp-jscs": "^3.0.2",
+    "gulp-jshint": "^2.0.0",
+    "gulp-load-plugins": "^1.1.0",
+    "gulp-print": "^2.0.1",
+    "gulp-stylus": "^2.1.0",
+    "gulp-util": "^3.0.7",
+    "jshint": "^2.9.1-rc1",
+    "jshint-stylish": "^2.1.0",
+    "yargs": "^3.30.0"
+  }
+}
