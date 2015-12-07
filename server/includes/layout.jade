@@ -3,10 +3,14 @@ html
     head
         link(href="/favicon.ico", rel="shortcut icon", type="image/x-icon")
 
+        // bower:css
         link(rel='stylesheet', href='/public/vendor/toastr/toastr.css')
-        link(rel='stylesheet', href='/public/vendor/bootstrap/dist/bootstrap.css')
+        link(rel='stylesheet', href='/public/vendor/bootstrap/dist/css/bootstrap.css')
+        // endbower
 
-        link(rel="stylesheet", href="/css/custom.css")
+        //- inject:css
+        link(rel="stylesheet", href="/public/app/styles/custom.css")
+        //- endinject
         
     body
         block main-content

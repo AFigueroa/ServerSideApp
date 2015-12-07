@@ -5,15 +5,15 @@ module.exports = function () {
     'use strict';
     
     var client = "./public/",
+        clientApp = client + "app/",
         server = "./server/",
         config = {
         
             /* 
                 File Paths
             */
-            
             // Temporary Directory
-            cssDir: client + "css",
+            cssDir: clientApp + "styles/",
             
             // Path to the Layout templates
             layoutTmps: server + 'includes',
@@ -22,27 +22,31 @@ module.exports = function () {
                 server + 'includes/layout.jade',
                 server + 'includes/scripts.jade'
             ],
+            allJade: server + '**/*.jade',
             
             // All JS for injection
             js:[
-                client + 'vendor/*.js',
-                client + '**/*.module.js',
-                client + '**/*.js'
+                clientApp + '**/*.module.js',
+                clientApp + '**/*.service.js',
+                clientApp + '**/*.controller.js',
+                clientApp + '**/*.js'
             ],
             
             // All CSS for injection
-            css: client + 'css/*.css',
+            css: clientApp + 'styles/*.css',
             
             // All JS to vet
             alljs: [
                 './server.js',
                 './sever/*.js',
-                client + '*.js',
-                client + 'vendor/*.js'
+                clientApp + '*.js',
+                clientApp + 'vendor/*.js'
             ],
 
             // Less files
             stylus: client + 'stylus/custom.styl',
+            
+            server: server,
 
             /* 
                 BOWER and NPM locations
@@ -52,7 +56,11 @@ module.exports = function () {
                 json: require('./bower.json'),
                 directory: './public/vendor/',
                 ignorePath: '../..'
-            }
+            },
+            
+            // NODE SETTINGS
+            defaultPort : 3030,
+            nodeServer : './server/server.js'
         };
     
     config.getWiredepDefaultOptions = function() {

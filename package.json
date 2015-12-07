@@ -16,6 +16,7 @@
     "stylus": "^0.52.4"
   },
   "devDependencies": {
+    "browser-sync": "^2.10.0",
     "del": "^2.1.0",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
@@ -25,6 +26,7 @@
     "gulp-jscs": "^3.0.2",
     "gulp-jshint": "^2.0.0",
     "gulp-load-plugins": "^1.1.0",
+    "gulp-nodemon": "^2.0.4",
     "gulp-plumber": "^1.0.1",
     "gulp-print": "^2.0.1",
     "gulp-stylus": "^2.1.0",

@@ -3,8 +3,10 @@ var require;
 // External Dependencies
 var gulp = require('gulp');
 var args = require('yargs').argv;
+var browserSync = require("browser-sync");
 var config = require('./gulp.config')();
 var del = require('del');
+var port = process.env.PORT || config.defaultPort;
 
 var $ = require('gulp-load-plugins')({lazy: true});
 
@@ -65,6 +67,13 @@ gulp.task('stylus-watcher', function(){
     
 });
 
+//@ jade-watcher
+gulp.task('jade-watcher', function(){
+    
+    gulp.watch([config.allJade]);
+    
+});
+
 gulp.task('wiredep', function(){
     
     log("Wire up the bower CSS and JS");
@@ -74,6 +83,7 @@ gulp.task('wiredep', function(){
     
     return gulp
         .src(config.jade)
+        .pipe($.if(args.verbose, $.print()))
         .pipe(wiredep(options))
         .pipe($.inject(gulp.src(config.js)))
         .pipe(gulp.dest(config.layoutTmps))
@@ -85,11 +95,78 @@ gulp.task('inject', ['wiredep', 'styles'], function(){
 
     return gulp
         .src(config.jade)
+        .pipe($.if(args.verbose, $.print()))
         .pipe($.inject(gulp.src(config.css)))
-        .pipe(gulp.dest(config.layoutTmps))
+        .pipe(gulp.dest(config.layoutTmps));
+});
+
+//@ serve-dev
+gulp.task('serve-dev', ['inject'], function(){
+    
+    var isDev = true;
+    
+    var nodeOptions = {
+        script: config.nodeServer,
+        ext: 'jade js',
+        delayTime: 1,
+        env: {
+            'PORT': port,
+            'NODE_ENV': isDev ? 'dev' : 'build'
+        },
+        watch: [config.server]
+        
+    };
+    
+    return $.nodemon(nodeOptions)
+    .on('restart', ['vet'], function(ev){
+        log('*** Nodemon restarted');
+        log('files changed on restart:/n' + ev);
+    })
+    .on('start', function(){
+        log('*** Nodemon started');
+        startBrowserSync();
+    })
+    .on('crash', function(){
+        log('*** Nodemon crashed');
+    })
+    .on('exit', function(){
+        log('*** Nodemon exited cleanly');
+    });
+    
 });
 
 ///////////
+
+//@ startBrowserSync
+function startBrowserSync() {
+    
+    if(browserSync.active){
+        return;
+    }
+    
+    log('Starting browser-sync on port ' + port);
+    
+    var options = {
+        proxy: 'localhost:' + port,
+        port: 3000,
+        files: [config.client + '**/*.*'],
+        ghostMode: {
+            clicks: true,
+            location: false,
+            froms: true,
+            scroll: true
+        },
+        injectChanges: true,
+        logFileChanges: true,
+        logLevel: 'debug',
+        logPrefix: 'gulp-patterns',
+        notify: true,
+        reloadDelay: 1000
+    };
+    
+    browserSync(options);
+    
+}
 
 //@ clean
 function clean(path, done) {

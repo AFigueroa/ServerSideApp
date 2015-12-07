@@ -19,7 +19,7 @@ function compile(str, path) {
 }
 
 // Configure the Express app
-app.set('views', __dirname + '/server/views');
+app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(stylus.middleware(
