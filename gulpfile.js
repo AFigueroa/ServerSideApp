@@ -85,7 +85,7 @@ gulp.task('wiredep', function(){
         .src(config.jade)
         .pipe($.if(args.verbose, $.print()))
         .pipe(wiredep(options))
-        .pipe($.inject(gulp.src(config.js)))
+        .pipe($.inject(gulp.src(config.js, {read: false}), {ignorePath: 'public', addRootSlash: false }))
         .pipe(gulp.dest(config.layoutTmps))
 });
 
@@ -96,7 +96,8 @@ gulp.task('inject', ['wiredep', 'styles'], function(){
     return gulp
         .src(config.jade)
         .pipe($.if(args.verbose, $.print()))
-        .pipe($.inject(gulp.src(config.css)))
+        .pipe($.inject(gulp.src(config.css, {read: false}), {ignorePath: 'public', addRootSlash: false }))
+        .pipe($.plumber())
         .pipe(gulp.dest(config.layoutTmps));
 });
 

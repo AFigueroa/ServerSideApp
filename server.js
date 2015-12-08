@@ -19,9 +19,13 @@ function compile(str, path) {
 }
 
 // Configure the Express app
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/server/views');
 app.set('view engine', 'jade');
 app.use(logger('dev'));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
 app.use(stylus.middleware(
     {
         src: __dirname + '/public',
@@ -46,7 +50,7 @@ app.get('*', function (req, res) {
 
 ///// Server Configuration \\\\\
 
-var port = 3030;
+var port = 8080;
 app.listen(port);
 
 console.log('Listening on port ' + port + '...');

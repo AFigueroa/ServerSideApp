@@ -55,12 +55,12 @@ module.exports = function () {
             bower:{
                 json: require('./bower.json'),
                 directory: './public/vendor/',
-                ignorePath: '../..'
+                ignorePath: '../../public/'
             },
             
             // NODE SETTINGS
-            defaultPort : 3030,
-            nodeServer : './server/server.js'
+            defaultPort : 8080,
+            nodeServer : './server.js'
         };
     
     config.getWiredepDefaultOptions = function() {
