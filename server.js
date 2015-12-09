@@ -1,3 +1,5 @@
+'use strict';
+
 ///// Load Dependencies \\\\\
 var express = require('express'),
     stylus = require('stylus'),

@@ -70,7 +70,8 @@ gulp.task('stylus-watcher', function(){
 //@ jade-watcher
 gulp.task('jade-watcher', function(){
     
-    gulp.watch([config.allJade]);
+    gulp.watch([config.allJade])
+        .on('change', browserSync.reload);
     
 });
 
@@ -119,9 +120,17 @@ gulp.task('serve-dev', ['inject'], function(){
     };
     
     return $.nodemon(nodeOptions)
-    .on('restart', ['vet'], function(ev){
+    .on('restart', function(ev){
         log('*** Nodemon restarted');
-        log('files changed on restart:/n' + ev);
+        log('files changed on restart:\n' + ev);
+        
+        setTimeout(function(){
+            
+            browserSync.notify('reloading now...');
+            browserSync.reload({stream: false});
+            
+        }, config.browserReloadDelay);
+        
     })
     .on('start', function(){
         log('*** Nodemon started');
@@ -138,19 +147,40 @@ gulp.task('serve-dev', ['inject'], function(){
 
 ///////////
 
+//@ changeEvent
+function changeEvent(event){
+    
+    var srcPattern = new RegExp('/.*(?=/' + config.source + ')/');
+    log('File '+ event.path.replace(srcPattern, '') + ' ' + event.type);
+    //browserSync.reload;
+}
+
 //@ startBrowserSync
 function startBrowserSync() {
     
-    if(browserSync.active){
+    if(args.nosync || browserSync.active){
         return;
     }
     
     log('Starting browser-sync on port ' + port);
     
+    gulp.watch([config.stylus], ['styles'])
+        .on('change', function(event){
+
+            changeEvent(event);
+
+        });
+
     var options = {
         proxy: 'localhost:' + port,
         port: 3000,
-        files: [config.client + '**/*.*'],
+        files: [
+            config.client + '**/*.*',
+            config.css,
+            config.server + '**/*.jade',
+            '!' + config.client + '**/*.styl',
+            '!' + config.client + 'vendor/**/*.*'
+        ],
         ghostMode: {
             clicks: true,
             location: false,
@@ -162,9 +192,9 @@ function startBrowserSync() {
         logLevel: 'debug',
         logPrefix: 'gulp-patterns',
         notify: true,
-        reloadDelay: 1000
+        reloadDelay: 0 //1000
     };
-    
+    log('Options have been loaded');
     browserSync(options);
     
 }

@@ -47,10 +47,14 @@ module.exports = function () {
             stylus: client + 'stylus/custom.styl',
             
             server: server,
+            
+            /* 
+                BrowserSync
+            */
+            browserReloadDelay: 1,
 
             /* 
                 BOWER and NPM locations
-                
             */
             bower:{
                 json: require('./bower.json'),
