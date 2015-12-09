@@ -43,6 +43,8 @@ module.exports = function () {
                 clientApp + 'vendor/*.js'
             ],
 
+            build: './build/',
+            fonts: clientApp + 'fonts/',
             // Less files
             stylus: client + 'stylus/custom.styl',
             

@@ -15,6 +15,24 @@ var $ = require('gulp-load-plugins')({lazy: true});
 var log = log;
 var clean = clean;
 
+//@ help
+gulp.task('help', $.taskListing);
+
+//@ default
+gulp.task('default', ['help']);
+
+//@ fonts
+gulp.task('fonts', function () {
+
+    'use strict';
+    //log('Analyzing source with JSHint and JSCS');
+    
+    return gulp
+        .src(config.fonts)
+        .pipe(gulp.dest(config.build + 'fonts'));
+        
+});
+
 //@ vet
 gulp.task('vet', function () {
 
@@ -76,6 +94,7 @@ gulp.task('jade-watcher', function(){
     
 });
 
+//@ wiredep
 gulp.task('wiredep', function(){
     
     log("Wire up the bower CSS and JS");
@@ -91,6 +110,7 @@ gulp.task('wiredep', function(){
         .pipe(gulp.dest(config.layoutTmps))
 });
 
+//@ inject
 gulp.task('inject', ['wiredep', 'styles'], function(){
     
     log("Wire up the custom CSS into the html, and call wiredep");
