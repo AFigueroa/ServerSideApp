@@ -4,6 +4,7 @@ var require;
 var gulp = require('gulp');
 var args = require('yargs').argv;
 var browserSync = require("browser-sync");
+var reload = browserSync.reload;
 var config = require('./gulp.config')();
 var del = require('del');
 var port = process.env.PORT || config.defaultPort;
@@ -115,7 +116,7 @@ gulp.task('serve-dev', ['inject'], function(){
             'PORT': port,
             'NODE_ENV': isDev ? 'dev' : 'build'
         },
-        watch: [config.server]
+        watch: [config.server, config.nodeServer]
         
     };
     
@@ -127,7 +128,7 @@ gulp.task('serve-dev', ['inject'], function(){
         setTimeout(function(){
             
             browserSync.notify('reloading now...');
-            browserSync.reload({stream: false});
+            reload({stream: false});
             
         }, config.browserReloadDelay);
         
@@ -179,7 +180,8 @@ function startBrowserSync() {
             config.css,
             config.server + '**/*.jade',
             '!' + config.client + '**/*.styl',
-            '!' + config.client + 'vendor/**/*.*'
+            '!' + config.client + 'vendor/**/*.*',
+            config.nodeServer
         ],
         ghostMode: {
             clicks: true,

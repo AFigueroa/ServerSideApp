@@ -51,7 +51,7 @@ module.exports = function () {
             /* 
                 BrowserSync
             */
-            browserReloadDelay: 1,
+            browserReloadDelay: 1000,
 
             /* 
                 BOWER and NPM locations
