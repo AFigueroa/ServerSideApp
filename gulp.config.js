@@ -44,7 +44,13 @@ module.exports = function () {
             ],
 
             build: './build/',
-            fonts: clientApp + 'fonts/',
+            fonts: [
+                clientApp + 'fonts/',
+                client + 'vendor/font-awesome/fonts/**/*.*'
+            ],
+            images: [
+                client + 'images/**/*.*'
+            ],
             // Less files
             stylus: client + 'stylus/custom.styl',
             

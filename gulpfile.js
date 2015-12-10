@@ -25,11 +25,26 @@ gulp.task('default', ['help']);
 gulp.task('fonts', function () {
 
     'use strict';
-    //log('Analyzing source with JSHint and JSCS');
+    log('Copying our fonts');
     
     return gulp
         .src(config.fonts)
+        .pipe($.if(args.verbose, $.print()))
         .pipe(gulp.dest(config.build + 'fonts'));
+        
+});
+
+//@ images
+gulp.task('images', function () {
+
+    'use strict';
+    log('Copying and compressing the images');
+    
+    return gulp
+        .src(config.images)
+        .pipe($.if(args.verbose, $.print()))
+        .pipe($.imagemin({optimizationLevel: 4}))
+        .pipe(gulp.dest(config.build + 'images'));
         
 });
 
