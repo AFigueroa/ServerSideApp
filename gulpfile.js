@@ -1,3 +1,5 @@
+/////////// CONFIGURATION
+
 var require;
 
 // External Dependencies
@@ -15,38 +17,96 @@ var $ = require('gulp-load-plugins')({lazy: true});
 var log = log;
 var clean = clean;
 
+/////////// TASKS
+
+/* ******* HELPER TASKS ******* */
+
 //@ help
 gulp.task('help', $.taskListing);
 
 //@ default
 gulp.task('default', ['help']);
 
-//@ fonts
-gulp.task('fonts', function () {
+/* ******* END OF HELPER TASKS ******* */
+
+
+/* ******* CLEANING TASKS ******* */
+
+//@ clean
+gulp.task('clean', function (done) {
 
     'use strict';
-    log('Copying our fonts');
     
-    return gulp
-        .src(config.fonts)
-        .pipe($.if(args.verbose, $.print()))
-        .pipe(gulp.dest(config.build + 'fonts'));
-        
+    // This pattern also concats arrays into an array
+    var files = [].concat(config.build );
+    
+    log('Cleaning: ' + $.util.colors.blue(files));
+    
+    del(files, done);
+    done();
+    
 });
 
-//@ images
-gulp.task('images', function () {
+//@ clean-styles
+gulp.task('clean-styles', function (done) {
 
     'use strict';
-    log('Copying and compressing the images');
     
-    return gulp
-        .src(config.images)
-        .pipe($.if(args.verbose, $.print()))
-        .pipe($.imagemin({optimizationLevel: 4}))
-        .pipe(gulp.dest(config.build + 'images'));
-        
+    var files = config.cssDir + '**/custom.css';
+    
+    clean(files, done);
+    done();
+    
 });
+
+//@ clean-fonts
+gulp.task('clean-fonts', function (done) {
+
+    'use strict';
+    
+    var files = config.build + 'fonts/**/*.*';
+    
+    clean(files, done);
+    done();
+    
+});
+
+//@ clean-images
+gulp.task('clean-images', function (done) {
+
+    'use strict';
+    
+    var files = config.build + 'images/**/*.*';
+    
+    clean(files, done);
+    done();
+    
+});
+
+/* ******* END OF CLEANING TASKS ******* */
+
+
+/* ******* WATCHER TASKS ******* */
+
+//@ stylus-watcher
+gulp.task('stylus-watcher', function(){
+    
+    gulp.watch([config.stylus], ['styles']);
+    
+});
+
+//@ jade-watcher
+gulp.task('jade-watcher', function(){
+    
+    gulp.watch([config.allJade])
+        .on('change', browserSync.reload);
+    
+});
+
+/* ******* END OF WATCHER TASKS ******* */
+
+
+/* ******* INJECTING TASKS ******* */
 
 //@ vet
 gulp.task('vet', function () {
@@ -61,6 +121,33 @@ gulp.task('vet', function () {
         .pipe($.jshint())
         .pipe($.jshint.reporter('jshint-stylish', {verbose: true}))
         .pipe($.jshint.reporter('fail'));
+});
+
+//@ fonts
+gulp.task('fonts', ['clean-fonts'], function () {
+
+    'use strict';
+    log('Copying our fonts');
+    
+    return gulp
+        .src(config.fonts)
+        .pipe($.if(args.verbose, $.print()))
+        .pipe(gulp.dest(config.build + 'fonts'));
+        
+});
+
+//@ images
+gulp.task('images', ['clean-images'],function () {
+
+    'use strict';
+    log('Copying and compressing the images');
+    
+    return gulp
+        .src(config.images)
+        .pipe($.if(args.verbose, $.print()))
+        .pipe($.imagemin({optimizationLevel: 4}))
+        .pipe(gulp.dest(config.build + 'images'));
+        
 });
 
 //@ styles
@@ -80,33 +167,6 @@ gulp.task('styles', ['clean-styles'], function (done) {
         .pipe(gulp.dest(config.cssDir));
     
     done();
-});
-
-//@ clean-styles
-gulp.task('clean-styles', function (done) {
-
-    'use strict';
-    
-    var files = config.cssDir + '**/custom.css';
-    
-    clean(files, done);
-    done();
-    
-});
-
-//@ stylus-watcher
-gulp.task('stylus-watcher', function(){
-    
-    gulp.watch([config.stylus], ['styles']);
-    
-});
-
-//@ jade-watcher
-gulp.task('jade-watcher', function(){
-    
-    gulp.watch([config.allJade])
-        .on('change', browserSync.reload);
-    
 });
 
 //@ wiredep
@@ -181,7 +241,10 @@ gulp.task('serve-dev', ['inject'], function(){
     
 });
 
-///////////
+/* ******* END OF INJECTING TASKS ******* */
+
+
+/////////// SUPPLEMENTAL METHODS
 
 //@ changeEvent
 function changeEvent(event){
