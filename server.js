@@ -2,7 +2,8 @@
 
 ///// Load Dependencies \\\\\
 var express = require('express'),
-    http = require('http').Server(express),
+    app = express(),
+    http = require('http').Server(app),
     io = require('socket.io')(http),
     stylus = require('stylus'),
     logger = require('morgan'),
@@ -34,7 +35,7 @@ MongoClient.connect(url, function (err, db) {
 var env = process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
 // Initiate the Express app
-var app = express();
+//var app = express();
 
 // Configure Stylus for CSS rendering
 function compile(str, path) {
@@ -50,21 +51,18 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
-app.use(stylus.middleware(
-    {
+app.use(stylus.middleware({
         src: __dirname + '/public',
         compile: compile
-    }
-));
+}));
 
 // Setup public routing to the "public" directory
 app.use(express.static(__dirname + '/public'));
 
-
 ///// Routing \\\\\
 
 // "Otherwise" route
-app.get('*', function (req, res) {
+app.get('*', function(req, res) {
     
     'use strict';
     
@@ -83,6 +81,6 @@ io.on('connection', function(socket){
 ///// Server Configuration \\\\\
 
 var port = 8080;
-app.listen(port);
-
-console.log('Listening on port ' + port + '...');
+http.listen(port, function(){
+  console.log('listening on localhost:'+ port);
+});

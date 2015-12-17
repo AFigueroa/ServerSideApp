@@ -12,7 +12,11 @@ html
         link(rel="stylesheet", href="app/styles/custom.css")
         //- endinject
         
+        // Socket.io needs to be loaded before the body
         script(src="/vendor/socket.io/socket.io.js" type="text/javascript")
+        
+        script(type="text/javascript").
+            var socket = io(); 
         
     body
         block main-content
