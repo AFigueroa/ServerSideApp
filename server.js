@@ -4,7 +4,7 @@
 var express = require('express'),
     app = express(),
     http = require('http').Server(app),
-    io = require('socket.io')(http),
+    io = require('./server/scripts/socket.io.routes.js').listen(http),
     stylus = require('stylus'),
     logger = require('morgan'),
     bodyParser = require('body-parser'),
@@ -34,9 +34,6 @@ MongoClient.connect(url, function (err, db) {
 // Set the NODE environment value or a default
 var env = process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
-// Initiate the Express app
-//var app = express();
-
 // Configure Stylus for CSS rendering
 function compile(str, path) {
     'use strict';
@@ -59,23 +56,17 @@ app.use(stylus.middleware({
 // Setup public routing to the "public" directory
 app.use(express.static(__dirname + '/public'));
 
+
 ///// Routing \\\\\
 
-// "Otherwise" route
-app.get('*', function(req, res) {
-    
-    'use strict';
-    
-    res.render('index');
-    
-});
+// Main Template Serving Routes
+var router = require('./server/scripts/routes.js');
 
-//Socket IO Event Listeners
+// API Routes
+var api = require('./server/scripts/routes.api.js');
 
-//@ Connection
-io.on('connection', function(socket){
-  console.log('a user connected');
-});
+app.use('/', router);
+app.use('/api', api);
 
 
 ///// Server Configuration \\\\\
