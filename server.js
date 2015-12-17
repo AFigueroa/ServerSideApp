@@ -4,9 +4,29 @@
 var express = require('express'),
     stylus = require('stylus'),
     logger = require('morgan'),
-    bodyParser = require('body-parser'); 
+    bodyParser = require('body-parser'),
+    mongodb = require('mongodb'),
+    MongoClient = mongodb.MongoClient; 
 
 ///// App Configuration \\\\\
+
+// URL to our mongodb
+var url = 'mongodb://localhost:27017/syneschool';
+
+// Use connect method to connect to the Server
+MongoClient.connect(url, function (err, db) {
+  if (err) {
+    console.log('Unable to connect to the mongoDB server. Error:', err);
+  } else {
+    //HURRAY!! We are connected. :)
+    console.log('Connection established to', url);
+
+    // do some work here with the database.
+
+    //Close connection
+    db.close();
+  }
+});
 
 // Set the NODE environment value or a default
 var env = process.env.NODE_ENV = process.env.NODE_ENV || "development";
