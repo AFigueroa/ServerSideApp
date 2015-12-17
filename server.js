@@ -2,6 +2,8 @@
 
 ///// Load Dependencies \\\\\
 var express = require('express'),
+    http = require('http').Server(express),
+    io = require('socket.io')(http),
     stylus = require('stylus'),
     logger = require('morgan'),
     bodyParser = require('body-parser'),
@@ -69,6 +71,14 @@ app.get('*', function (req, res) {
     res.render('index');
     
 });
+
+//Socket IO Event Listeners
+
+//@ Connection
+io.on('connection', function(socket){
+  console.log('a user connected');
+});
+
 
 ///// Server Configuration \\\\\
 
