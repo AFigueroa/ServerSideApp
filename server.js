@@ -7,28 +7,20 @@ var express = require('express'),
     io = require('./server/scripts/socket.io.routes.js').listen(http),
     stylus = require('stylus'),
     logger = require('morgan'),
-    bodyParser = require('body-parser'),
-    mongodb = require('mongodb'),
-    MongoClient = mongodb.MongoClient; 
+    mongoose = require('mongoose'),
+    bodyParser = require('body-parser') 
 
 ///// App Configuration \\\\\
 
 // URL to our mongodb
 var url = 'mongodb://localhost:27017/syneschool';
+mongoose.connect(url);
 
-// Use connect method to connect to the Server
-MongoClient.connect(url, function (err, db) {
-  if (err) {
-    console.log('Unable to connect to the mongoDB server. Error:', err);
-  } else {
-    //HURRAY!! We are connected. :)
-    console.log('Connection established to', url);
-
-    // do some work here with the database.
-
-    //Close connection
-    db.close();
-  }
+// Test the conection
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function (callback) {
+  console.log('Mongoose has connected to the MongoDB database.');
 });
 
 // Set the NODE environment value or a default
@@ -73,5 +65,5 @@ app.use('/api', api);
 
 var port = 8080;
 http.listen(port, function(){
-  console.log('listening on localhost:'+ port);
+  console.log('Running on localhost:'+ port);
 });
