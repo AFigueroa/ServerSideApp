@@ -1,0 +1,4 @@
+mixin field(type, name, label)
+  .field(class='field-' + type)
+    label #{label}:
+    input(type=type, name='name')

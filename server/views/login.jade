@@ -1,0 +1,11 @@
+extends ../includes/layout
+
+include ./mixins/form-helpers
+
+block main-content
+    form
+      mixin field('text', 'name', 'Username')
+      mixin field('text', 'email', 'Email')
+      mixin field('password', 'pass', 'Password')
+      input(type='submit', value='Sign Up')
+    
