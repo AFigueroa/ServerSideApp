@@ -32,17 +32,17 @@ function compile(str, path) {
 }
 
 // Configure the Express app
-app.set('views', __dirname + '/server/views');
-app.set('view engine', 'jade');
-app.use(logger('dev'));
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-app.use(bodyParser.json());
-app.use(stylus.middleware({
-    src: __dirname + '/public',
-    compile: compile
-}));
+app.set('views', __dirname + '/server/views')
+    .set('view engine', 'jade')
+    .use(logger('dev'))
+    .use(bodyParser.urlencoded({
+        extended: true
+    }))
+    .use(bodyParser.json())
+    .use(stylus.middleware({
+        src: __dirname + '/public',
+        compile: compile
+    }));
 
 // Setup public routing to the "public" directory
 app.use(express.static(__dirname + '/public'));

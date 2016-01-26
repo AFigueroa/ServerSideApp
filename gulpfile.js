@@ -1,7 +1,5 @@
 /////////// CONFIGURATION
 
-var require;
-
 // External Dependencies
 var gulp = require('gulp');
 var args = require('yargs').argv;
@@ -10,7 +8,11 @@ var reload = browserSync.reload;
 var config = require('./gulp.config')();
 var del = require('del');
 var port = process.env.PORT || config.defaultPort;
+var source = require('vinyl-source-stream');
+var browserify = require('browserify');
+var reactify = require('reactify');
 
+// Load all plugins
 var $ = require('gulp-load-plugins')({lazy: true});
 
 // Suplementary Method Dependencies
@@ -59,6 +61,18 @@ gulp.task('clean-styles', function (done) {
     
 });
 
+//@ clean-jsx
+gulp.task('clean-jsx', function (done) {
+
+    'use strict';
+
+    var file = config.mainReactApp;
+
+    clean(file, done);
+    done();
+
+});
+
 //@ clean-fonts
 gulp.task('clean-fonts', function (done) {
 
@@ -103,10 +117,32 @@ gulp.task('jade-watcher', function(){
     
 });
 
+//@ jsx-watcher
+gulp.task('jsx-watcher', function(){
+
+    gulp.watch([config.allJsx], ['bundle-jsx'])
+        .on('change', browserSync.reload);
+
+});
+
 /* ******* END OF WATCHER TASKS ******* */
 
 
 /* ******* INJECTING TASKS ******* */
+
+//@ bundle-jsx
+gulp.task('bundle-jsx', ['clean-jsx'], function(){
+
+    return browserify({
+        entries:  './public/app/reactscripts/main.jsx',
+        debug: true
+    })
+    .transform(reactify)
+    .bundle()
+    .pipe(source('app.js'))
+    .pipe(gulp.dest(config.jsxBundleDest));
+
+});
 
 //@ vet
 gulp.task('vet', function () {
@@ -270,12 +306,20 @@ function startBrowserSync() {
 
         });
 
+    gulp.watch([config.allJsx], ['bundle-jsx'])
+        .on('change', function(event){
+
+            changeEvent(event);
+
+        });
+
     var options = {
         proxy: 'localhost:' + port,
         port: 3000,
         files: [
             config.client + '**/*.*',
             config.css,
+            config.allJsx,
             config.server + '**/*.jade',
             '!' + config.client + '**/*.styl',
             '!' + config.client + 'vendor/**/*.*',

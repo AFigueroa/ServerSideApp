@@ -6,6 +6,7 @@ module.exports = function () {
     
     var client = "./public/",
         clientApp = client + "app/",
+        reactScripts = clientApp + 'reactscripts/',
         server = "./server/",
         config = {
         
@@ -24,6 +25,7 @@ module.exports = function () {
             ],
             allJade: server + '**/*.jade',
             
+
             // All JS for injection
             js:[
                 clientApp + '**/*.module.js',
@@ -39,9 +41,12 @@ module.exports = function () {
             alljs: [
                 './server.js',
                 './sever/*.js',
-                clientApp + '*.js',
-                clientApp + 'vendor/*.js'
+                clientApp + 'vendor/*.js',
+                clientApp + '/**/*.js',
             ],
+
+            // All JSX files
+            allJsx: reactScripts + '**/*.jsx',
 
             build: './build/',
             fonts: [
@@ -72,7 +77,12 @@ module.exports = function () {
             
             // NODE SETTINGS
             defaultPort : 8080,
-            nodeServer : './server.js'
+            nodeServer : './server.js',
+
+            // JSX
+            browserifyTarget: './public/app/reactscripts/main.jsx',
+            mainReactApp: clientApp + 'scripts/app.js',
+            jsxBundleDest: clientApp + 'scripts'
         };
     
     config.getWiredepDefaultOptions = function() {
