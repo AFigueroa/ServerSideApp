@@ -6,16 +6,12 @@ html
 
         // bower:css
         link(rel='stylesheet', href='vendor/toastr/toastr.css')
-        link(rel='stylesheet', href='vendor/bootstrap/dist/css/bootstrap.css')
         // endbower
 
         //- inject:css
         link(rel="stylesheet", href="app/styles/custom.css")
         //- endinject
-        
-        // Socket.io needs to be loaded before the body
-        script(src="/vendor/socket.io/socket.io.js" type="text/javascript")
-        
+
     body
         block main-content
         include scripts

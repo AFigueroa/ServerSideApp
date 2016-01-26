@@ -1,5 +1,3 @@
-'use strict';
-
 ///// Load Dependencies \\\\\
 var express = require('express'),
     app = express(),
@@ -8,7 +6,7 @@ var express = require('express'),
     stylus = require('stylus'),
     logger = require('morgan'),
     mongoose = require('mongoose'),
-    bodyParser = require('body-parser') 
+    bodyParser = require('body-parser');
 
 ///// App Configuration \\\\\
 
@@ -20,7 +18,8 @@ mongoose.connect(url);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
-  console.log('Mongoose has connected to the MongoDB database.');
+    'use strict';
+    console.log('Mongoose has connected to the MongoDB database.');
 });
 
 // Set the NODE environment value or a default
@@ -37,12 +36,12 @@ app.set('views', __dirname + '/server/views');
 app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({
-  extended: true
+    extended: true
 }));
 app.use(bodyParser.json());
 app.use(stylus.middleware({
-        src: __dirname + '/public',
-        compile: compile
+    src: __dirname + '/public',
+    compile: compile
 }));
 
 // Setup public routing to the "public" directory
@@ -64,6 +63,7 @@ app.use('/api', api);
 ///// Server Configuration \\\\\
 
 var port = 8080;
-http.listen(port, function(){
-  console.log('Running on localhost:'+ port);
+http.listen(port, function () {
+    'use strict';
+    console.log('Running on localhost:' + port);
 });
