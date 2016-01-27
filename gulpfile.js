@@ -131,7 +131,7 @@ gulp.task('jsx-watcher', function(){
 /* ******* INJECTING TASKS ******* */
 
 //@ bundle-jsx
-gulp.task('bundle-jsx', ['clean-jsx'], function(){
+gulp.task('bundle-jsx', function(){
 
     return browserify({
         entries:  './public/app/reactscripts/main.jsx',
@@ -206,7 +206,7 @@ gulp.task('styles', ['clean-styles'], function (done) {
 });
 
 //@ wiredep
-gulp.task('wiredep', function(){
+gulp.task('wiredep',['bundle-jsx'], function(){
     
     log("Wire up the bower CSS and JS");
     
@@ -306,7 +306,7 @@ function startBrowserSync() {
 
         });
 
-    gulp.watch([config.allJsx], ['bundle-jsx'])
+    gulp.watch([config.allJsx], ['wiredep'])
         .on('change', function(event){
 
             changeEvent(event);
