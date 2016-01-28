@@ -12,13 +12,21 @@ module.exports = React.createClass({
     render: function(){
         
         return (
-            <div className='grocery-addItem'>
-                <form>
-                    <input value={this.state.input}/>
-                    <button> Add Item </button>
-                </form>
+
+            <form className="container-form">
+
+                <div className="input-container">
+                    <label>Item Name</label>
+                    <input value={this.state.input} placeholder="Add an item"/>
+                </div>
+
+                <div className="input-container">
+                <input className="submit" type="submit" value="Add"/>
+                </div>
+
+            </form>
                
-            </div>
+
         )
         
     }
