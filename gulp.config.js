@@ -28,6 +28,7 @@ module.exports = function () {
 
             // All JS for injection
             js:[
+                '!' + clientApp + 'scripts/dispatcher.js',
                 clientApp + '**/*.module.js',
                 clientApp + '**/*.service.js',
                 clientApp + '**/*.controller.js',

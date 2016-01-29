@@ -7,7 +7,9 @@ module.exports = React.createClass({
         
         return (
             <div className="container-list-item">
-                {this.props.item.name}
+                <div className={this.props.item.purchased ? "strikethrough" : ""}>
+                    {this.props.item.name}
+                </div>
             </div>
         )
         

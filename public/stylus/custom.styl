@@ -76,14 +76,16 @@ body
     margin 0 auto
     padding 10px 2.5%
     width  95%
+    min-width 200px
 
 .container-header
     margin-right 0
     background-color grey6
     color: grey3
-    font-family: lato;
-    font-weight bold;
-    font-size fontContainerHeader;
+    font-family: lato
+    font-weight bold
+    font-size fontContainerHeader
+    text-align center
     border-top-left-radius inherit
     border-top-right-radius inherit
 
@@ -185,11 +187,13 @@ body
 .twelve
     width: 100%
 
-
+.strikethrough
+    text-decoration line-through
+    color grey5
 // MEDIA QUERIES
 
 // Smaller than Tablet
-@media screen and (min-width:0 max-width: 375px)
+@media screen and (max-width: 375px)
     .column, .columns
         width: 100%
     .container *

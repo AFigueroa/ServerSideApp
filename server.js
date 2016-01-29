@@ -10,7 +10,6 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
-    uid = require('node-uuid'),
     crypto = require("crypto"),
         algorithm = 'aes-256-ctr',
         password = 'n123oDHri1VCodqdaD';
