@@ -3,6 +3,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var GroceryItemList = require('./components/grocery/grocerylist.component.jsx');
+var TopMenu = require('./components/topmenu/topmenu.component.jsx');
 
 var temporaryArray = [
     {
@@ -20,6 +21,9 @@ var temporaryArray = [
     }
     
 ];
+
+// Render the Top Menu
+ReactDOM.render(<TopMenu/>, topmenu)
 
 // Render the app's main view
 ReactDOM.render(<GroceryItemList items={temporaryArray}/>, app)
