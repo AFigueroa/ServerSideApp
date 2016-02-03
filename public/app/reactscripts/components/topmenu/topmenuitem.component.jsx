@@ -3,14 +3,19 @@ var React = require('react');
 
 // Top Menu Item Component
 module.exports = React.createClass({
+
     render: function(){
 
         return (
+        <a href={this.props.item.url}>
             <div className="top-menu-item">
-                <div>
-                    Login / Signup
-                </div>
+
+
+                    {this.props.item.label}
+
+
             </div>
+        </a>
         )
 
     }

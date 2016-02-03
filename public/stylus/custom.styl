@@ -56,14 +56,27 @@ body
     display block
 
 .top-menu-item
+    padding 30px
     font-size fontBody
     color grey7
-    padding 16% 0 16% 15px
     font-weight normal
     display inline-block
+    text-decoration none
+
+.top-menu-item:hover
+    color grey2
+    background-color #585758
+
+.top-menu-container
+    width 100%
+
+#top-menu-items-container
+    width 77.9%
+#topmenu .toggle-menu-icon
+    display none
 
 .logo-container
-    padding 5px 0 5px 15px
+    padding 5px 15px
 
 #app
     padding 0
@@ -206,10 +219,12 @@ body
 .strikethrough
     text-decoration line-through
     color grey5
+
+
 // MEDIA QUERIES
 
 // Smaller than Tablet
-@media screen and (max-width: 375px)
+@media screen and (max-width: 478px)
     .column, .columns
         width: 100%
     .container *
@@ -217,3 +232,32 @@ body
 
     .input-container input
         text-indent 0
+
+    .top-menu-container
+        width 100%
+
+    .top-menu-container #top-menu-items-container
+        display none
+        width 100%
+        border-top 1px solid grey7
+        padding 0
+
+    .top-menu-container #top-menu-items-container.visible
+        display inherit
+
+    .top-menu-item,
+        display inline-block
+        width 100%
+        text-align center
+        padding-top 10px
+        padding-bottom 10px
+        padding-left 0
+        margin 0 auto
+
+    #topmenu .toggle-menu-icon
+        float right
+        display inline-block
+        font-size fontContainerHeader
+        color grey7
+        padding 27px 10%
+

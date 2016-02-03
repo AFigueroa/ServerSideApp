@@ -5,16 +5,37 @@ var MenuItem = require('./topmenuitem.component.jsx');
 
 // Top Menu Component
 module.exports = React.createClass({
+    getInitialState: function() {
+        return {
+            visible: false
+        };
+    },
+    toggleTopMenu: function(){
+
+         $( "#top-menu-items-container" ).toggleClass( "visible" );
+
+    },
     render: function(){
         return (
 
-        <div>
+        <div className="top-menu-container">
             <div className="logo-container">
-            <a href="#">
-                <img src="./app/images/logo.png" alt="Syne-U Logo" height="65" width="65"/>
-            </a>
+                <a href="/">
+                    <img src="./app/images/logo.png" alt="Syne-U Logo" height="65" width="65"/>
+                </a>
             </div>
-            <MenuItem />
+
+            <div className="toggle-menu-icon" onClick={this.toggleTopMenu}>
+                <i className="fa fa-bars"></i>
+            </div>
+
+            <div id="top-menu-items-container" className={this.state.visible ? "visible " : ""}>
+                {this.props.topMenuItems.map(function(item, index){
+                    return(
+                        <MenuItem item={item} key={"item" + index}/>
+                    )
+                })}
+            </div>
         </div>
 
         )
