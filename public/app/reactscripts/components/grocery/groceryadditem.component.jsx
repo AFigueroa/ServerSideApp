@@ -1,5 +1,6 @@
 // Dependencies
 var React = require('react');
+var action = require('./actions/groceryitem.actions.jsx');
 
 // Grocery Item Component
 module.exports = React.createClass({
@@ -20,7 +21,14 @@ module.exports = React.createClass({
     addItem: function(e){
         
         e.preventDefault();
-        console.log('Adding Item: ', this.state.input)
+
+        action.add({
+            name: this.state.input
+        });
+
+        this.setState({
+            input:''
+        })
 
     },
     render: function(){

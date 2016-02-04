@@ -5,7 +5,7 @@ module.exports = {
     register: function(done){
         var id = uuid.v1();
         
-        listeners[id] = callback;
+        listeners[id] = done;
         
         return id;
     },

@@ -10,6 +10,9 @@ module.exports = React.createClass({
                 <div className={this.props.item.purchased ? "strikethrough" : ""}>
                     {this.props.item.name}
                 </div>
+                <form className="container-list-item-delete" onSubmit={this.delete}>
+                <button>&times;</button>
+                </form>
             </div>
         )
         
