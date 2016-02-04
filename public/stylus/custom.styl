@@ -40,6 +40,10 @@ body
     background-image url(darkDenim3)
     background-repeat repeat
 
+#app
+    position absolute
+    z-index -2
+
 #wrapper
     margin 0 auto
     min-width 320px
@@ -70,8 +74,12 @@ body
 .top-menu-container
     width 100%
 
+#topmenu .top-menu-slogan
+    display none
+
 #top-menu-items-container
     width 77.9%
+
 #topmenu .toggle-menu-icon
     display none
 
@@ -237,27 +245,46 @@ body
         width 100%
 
     .top-menu-container #top-menu-items-container
-        display none
+        position absolute
+        background-color grey7
+        z-index -1
+        top -15px
         width 100%
-        border-top 1px solid grey7
         padding 0
+        transition top 0.5s
 
     .top-menu-container #top-menu-items-container.visible
         display inherit
+        top 76px
 
-    .top-menu-item,
+    .top-menu-item
         display inline-block
         width 100%
         text-align center
-        padding-top 10px
-        padding-bottom 10px
+        padding-top 15px
+        padding-bottom 15px
         padding-left 0
         margin 0 auto
+        color grey3
+        font-weight bold
 
+    .logo-container
+        padding-right 0
     #topmenu .toggle-menu-icon
         float right
         display inline-block
         font-size fontContainerHeader
         color grey7
-        padding 27px 10%
+        padding 27px 7.5%
+        padding-left 0
 
+    #topmenu .top-menu-slogan
+        display inline-block
+        margin 0 auto
+        padding 27px 0
+        width 60%
+        position absolute
+        z-index 3
+        text-align center
+        font-size fontContainerHeader
+        color grey7

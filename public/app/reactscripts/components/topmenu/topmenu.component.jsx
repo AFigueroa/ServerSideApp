@@ -25,6 +25,10 @@ module.exports = React.createClass({
                 </a>
             </div>
 
+            <div className="top-menu-slogan">
+                Be Awesome
+            </div>
+
             <div className="toggle-menu-icon" onClick={this.toggleTopMenu}>
                 <i className="fa fa-bars"></i>
             </div>
