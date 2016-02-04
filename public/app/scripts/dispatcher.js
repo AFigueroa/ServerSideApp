@@ -1,9 +1,9 @@
-var guid = require('guid');
+var uuid = require('node-uuid');
 var listeners = {};
 
 module.exports = {
     register: function(done){
-        var id = guid.raw();
+        var id = uuid.v1();
         
         listeners[id] = callback;
         

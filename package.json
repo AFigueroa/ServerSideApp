@@ -11,10 +11,10 @@
   "dependencies": {
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
-    "guid": "0.0.12",
     "jade": "^1.11.0",
     "mongoose": "^4.3.3",
     "morgan": "^1.6.1",
+    "node-uuid": "^1.4.7",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "react": "^0.14.6",
