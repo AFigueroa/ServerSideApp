@@ -1,8 +1,13 @@
 // Dependencies
 var React = require('react');
+var action = require('./actions/groceryitem.actions.jsx');
 
 // Grocery Item Component
 module.exports = React.createClass({
+    delete: function(e){
+        e.preventDefault();
+        action.delete(this.props.item);
+    },
     render: function(){
         
         return (
@@ -11,7 +16,7 @@ module.exports = React.createClass({
                     {this.props.item.name}
                 </div>
                 <form className="container-list-item-delete" onSubmit={this.delete}>
-                <button>&times;</button>
+                    <button>&times;</button>
                 </form>
             </div>
         )

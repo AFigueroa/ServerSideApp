@@ -40,7 +40,7 @@ gulp.task('clean', function (done) {
     'use strict';
     
     // This pattern also concats arrays into an array
-    var files = [].concat(config.build );
+    var files = [].concat(config.build);
     
     log('Cleaning: ' + $.util.colors.blue(files));
     
@@ -103,14 +103,16 @@ gulp.task('clean-images', function (done) {
 /* ******* WATCHER TASKS ******* */
 
 //@ stylus-watcher
-gulp.task('stylus-watcher', function(){
+gulp.task('stylus-watcher', function () {
+    'use strict';
     
     gulp.watch([config.stylus], ['styles']);
     
 });
 
 //@ jade-watcher
-gulp.task('jade-watcher', function(){
+gulp.task('jade-watcher', function () {
+    'use strict';
     
     gulp.watch([config.allJade])
         .on('change', browserSync.reload);
@@ -118,8 +120,9 @@ gulp.task('jade-watcher', function(){
 });
 
 //@ jsx-watcher
-gulp.task('jsx-watcher', function(){
-
+gulp.task('jsx-watcher', function () {
+    'use strict';
+    
     gulp.watch([config.allJsx], ['bundle-jsx'])
         .on('change', browserSync.reload);
 
@@ -131,23 +134,24 @@ gulp.task('jsx-watcher', function(){
 /* ******* INJECTING TASKS ******* */
 
 //@ bundle-jsx
-gulp.task('bundle-jsx', function(){
-
+gulp.task('bundle-jsx', function () {
+    'use strict';
+    
     return browserify({
         entries:  './public/app/reactscripts/main.jsx',
         debug: true
     })
-    .transform(reactify)
-    .bundle()
-    .pipe(source('app.js'))
-    .pipe(gulp.dest(config.jsxBundleDest));
+        .transform(reactify)
+        .bundle()
+        .pipe(source('app.js'))
+        .pipe(gulp.dest(config.jsxBundleDest));
 
 });
 
 //@ vet
 gulp.task('vet', function () {
-
     'use strict';
+    
     log('Analyzing source with JSHint and JSCS');
     
     return gulp
@@ -161,8 +165,8 @@ gulp.task('vet', function () {
 
 //@ fonts
 gulp.task('fonts', ['clean-fonts'], function () {
-
     'use strict';
+    
     log('Copying our fonts');
     
     return gulp
@@ -173,9 +177,9 @@ gulp.task('fonts', ['clean-fonts'], function () {
 });
 
 //@ images
-gulp.task('images', ['clean-images'],function () {
-
+gulp.task('images', ['clean-images'], function () {
     'use strict';
+    
     log('Copying and compressing the images');
     
     return gulp
@@ -188,8 +192,8 @@ gulp.task('images', ['clean-images'],function () {
 
 //@ styles
 gulp.task('styles', ['clean-styles'], function (done) {
-
     'use strict';
+    
     log('Compiling Stylus --> CSS');
     
     return gulp
@@ -199,14 +203,15 @@ gulp.task('styles', ['clean-styles'], function (done) {
         .pipe($.stylus({
             compress: true
         }))
-        //.pipe($.autoprefixer({browsers: ['last 2 versions', '> 5%']}))
+        .pipe($.autoprefixer({browsers: ['last 2 versions', '> 5%']}))
+        .pipe($.concat('custom.min.css'))
         .pipe(gulp.dest(config.cssDir));
-    
-    done();
+
 });
 
 //@ wiredep
-gulp.task('wiredep',['bundle-jsx'], function(){
+gulp.task('wiredep', ['bundle-jsx'], function () {
+    'use strict';
     
     log("Wire up the bower CSS and JS");
     
@@ -218,11 +223,12 @@ gulp.task('wiredep',['bundle-jsx'], function(){
         .pipe($.if(args.verbose, $.print()))
         .pipe(wiredep(options))
         .pipe($.inject(gulp.src(config.js, {read: false}), {ignorePath: 'public', addRootSlash: false }))
-        .pipe(gulp.dest(config.layoutTmps))
+        .pipe(gulp.dest(config.layoutTmps));
 });
 
 //@ inject
-gulp.task('inject', ['wiredep', 'styles'], function(){
+gulp.task('inject', ['wiredep', 'styles'], function () {
+    'use strict';
     
     log("Wire up the custom CSS into the html, and call wiredep");
 
@@ -235,45 +241,45 @@ gulp.task('inject', ['wiredep', 'styles'], function(){
 });
 
 //@ serve-dev
-gulp.task('serve-dev', ['inject'], function(){
+gulp.task('serve-dev', ['inject'], function () {
+    'use strict';
     
-    var isDev = true;
-    
-    var nodeOptions = {
-        script: config.nodeServer,
-        ext: 'jade js',
-        delayTime: 1,
-        env: {
-            'PORT': port,
-            'NODE_ENV': isDev ? 'dev' : 'build'
-        },
-        watch: [config.server, config.nodeServer]
+    var isDev = true,
+        nodeOptions = {
+            script: config.nodeServer,
+            ext: 'jade js',
+            delayTime: 1,
+            env: {
+                'PORT': port,
+                'NODE_ENV': isDev ? 'dev' : 'build'
+            },
+            watch: [config.server, config.nodeServer]
         
-    };
+        };
     
     return $.nodemon(nodeOptions)
-    .on('restart', function(ev){
-        log('*** Nodemon restarted');
-        log('files changed on restart:\n' + ev);
-        
-        setTimeout(function(){
-            
-            browserSync.notify('reloading now...');
-            reload({stream: false});
-            
-        }, config.browserReloadDelay);
-        
-    })
-    .on('start', function(){
-        log('*** Nodemon started');
-        startBrowserSync();
-    })
-    .on('crash', function(){
-        log('*** Nodemon crashed');
-    })
-    .on('exit', function(){
-        log('*** Nodemon exited cleanly');
-    });
+        .on('restart', function (ev) {
+            log('*** Nodemon restarted');
+            log('files changed on restart:\n' + ev);
+
+            setTimeout(function () {
+
+                browserSync.notify('reloading now...');
+                reload({stream: false});
+
+            }, config.browserReloadDelay);
+
+        })
+        .on('start', function () {
+            log('*** Nodemon started');
+            startBrowserSync();
+        })
+        .on('crash', function () {
+            log('*** Nodemon crashed');
+        })
+        .on('exit', function () {
+            log('*** Nodemon exited cleanly');
+        });
     
 });
 
@@ -283,31 +289,33 @@ gulp.task('serve-dev', ['inject'], function(){
 /////////// SUPPLEMENTAL METHODS
 
 //@ changeEvent
-function changeEvent(event){
+function changeEvent(event) {
+    'use strict';
     
     var srcPattern = new RegExp('/.*(?=/' + config.source + ')/');
-    log('File '+ event.path.replace(srcPattern, '') + ' ' + event.type);
+    log('File ' + event.path.replace(srcPattern, '') + ' ' + event.type);
     //browserSync.reload;
 }
 
 //@ startBrowserSync
 function startBrowserSync() {
+    'use strict';
     
-    if(args.nosync || browserSync.active){
+    if (args.nosync || browserSync.active) {
         return;
     }
     
     log('Starting browser-sync on port ' + port);
     
     gulp.watch([config.stylus], ['styles'])
-        .on('change', function(event){
+        .on('change', function (event) {
 
             changeEvent(event);
 
         });
 
     gulp.watch([config.allJsx], ['wiredep'])
-        .on('change', function(event){
+        .on('change', function (event) {
 
             changeEvent(event);
 
@@ -345,7 +353,6 @@ function startBrowserSync() {
 
 //@ clean
 function clean(path, done) {
-
     'use strict';
     
     log('Cleaning: ' + $.util.colors.blue(path));
@@ -355,8 +362,8 @@ function clean(path, done) {
 
 //@ log
 function log(msg) {
-    
     'use strict';
+    
     var item;
     
     if (typeof (msg) === 'object') {

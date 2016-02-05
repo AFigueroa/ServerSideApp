@@ -1,0 +1,77 @@
+// LAYOUT RULES
+
+@require 'variables'
+
+body
+    width 100%
+    color grey4
+    font-size 10px
+    background-image url(darkDenim3)
+    background-repeat repeat
+
+#app
+    position absolute
+    z-index -2
+    width 100%
+    padding 0
+
+#wrapper
+    margin 0 auto
+    min-width 320px
+    width 100%
+
+.row
+    width 100%
+    display block
+
+.column, .columns
+    padding 20px 0
+    float left
+    display inline-block
+    
+    
+// THE GRID
+.one
+    width: 8.333333333%
+
+.two
+    width: 16.66666666%
+
+.three
+    width: 24.99999999%
+
+.four
+    width: 33.333333332%
+
+.five
+    width: 41.666666665%
+
+.six
+    width: 49.999999998%
+
+.seven
+    width: 58.333333331%
+
+.eight
+    width: 66.666666664%
+
+.nine
+    width: 74.999999997%
+
+.ten
+    width: 83.33333333%
+
+.eleven
+    width: 91.666666663%
+
+.twelve
+    width: 100%
+
+    
+// MEDIA QUERIES
+
+// Smaller than Tablet
+@media screen and (max-width: 478px)
+    
+    .column, .columns
+        width: 100%

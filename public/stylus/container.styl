@@ -1,0 +1,135 @@
+// CONTAINER RULES
+
+@require 'variables'
+
+.container
+    width 100%
+    border-radius 5px
+    min-width 250px
+    margin 0 auto
+    float left
+
+.container *
+    margin 0 auto
+    padding 10px 2.5%
+    width  95%
+    min-width 200px
+
+.container-header
+    margin-right 0
+    background-color grey6
+    color: grey3
+    font-family: lato
+    font-weight bold
+    font-size fontContainerHeader
+    text-align center
+    border-top-left-radius inherit
+    border-top-right-radius inherit
+
+.container .container-body
+    margin-right 0
+    background-color grey3;
+    color grey6
+    font-family: lato;
+    font-weight normal;
+    font-size fontBody;
+    border-bottom-left-radius inherit
+    border-bottom-right-radius inherit
+
+.container-list
+    width 100%
+    padding 0
+    margin 0
+
+.container-list-item
+    position relative
+    width 100%
+    margin  0
+    padding 10px 0
+    min-height 44px
+
+.container-list-item:hover
+    background-color grey7
+    color grey3
+    
+
+.container-list-item:hover .container-list-item-delete button
+    color grey7
+
+.container-list-item div
+    line-height 28px
+
+.container-list-item-delete
+    position absolute
+    top 0
+
+.container-list-item-delete button
+    position relative
+    left 75%
+    top 0
+    width 5%
+    margin 0
+    padding 10px 5px;
+    font-size fontBody
+    min-width 44px
+    border none
+    border-radius 100%
+    border-radius 100%
+
+.container-list-item:hover .container-list-item-delete button:hover
+    background-color #e82805
+    color white
+
+.container-form
+    width 100%
+    display inline-block
+    padding 0
+    margin 10px 0 0 0
+    margin-right 0
+
+.input-container
+    margin 0
+    margin-bottom 10px
+    padding 0
+    width 100%
+
+.input-container:last-of-type
+    margin-bottom 0
+
+.input-container label
+    display inline-block
+    font-weight bold
+    margin 0
+    padding 0
+    margin-bottom 5px
+
+.input-container input
+    left 10px
+    display inline-block
+    padding 10px 0
+    margin 0
+    margin-right 10px
+    border none
+    width 100%
+    text-indent 10px
+
+.input-container .submit
+    background-color #aa8ee5
+    color grey1
+    font-weight bold
+    border-radius 2px
+    padding 10px 0
+    text-indent 0
+    
+// MEDIA QUERIES
+
+// Smaller than Tablet
+@media screen and (max-width: 478px)
+    .container *
+        text-align center
+
+    .input-container input
+        text-indent 0
+
+    .container-list-item-delete button
+        left 38%

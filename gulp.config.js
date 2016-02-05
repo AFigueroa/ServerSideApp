@@ -58,7 +58,10 @@ module.exports = function () {
                 client + 'images/**/*.*'
             ],
             // Less files
-            stylus: client + 'stylus/custom.styl',
+            stylus: [
+                client + 'stylus/layout.styl',
+                client + 'stylus/**.styl'
+            ],  
             
             server: server,
             

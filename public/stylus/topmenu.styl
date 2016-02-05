@@ -1,0 +1,92 @@
+// TOP MENU RULES
+
+@require 'variables'
+
+#topmenu
+    overflow hidden
+    width 100%
+    background-color grey2
+    min-height 75px
+
+#topmenu div
+    float left
+    display block
+
+.top-menu-item
+    padding 30px
+    font-size fontBody
+    color grey7
+    font-weight normal
+    display inline-block
+    text-decoration none
+
+.top-menu-item:hover
+    color grey2
+    background-color #585758
+
+.top-menu-container
+    width 100%
+
+#topmenu .top-menu-slogan
+    display none
+
+#top-menu-items-container
+    width 77.9%
+
+#topmenu .toggle-menu-icon
+    display none
+
+.logo-container
+    padding 5px 15px
+    
+// Smaller than Tablet
+@media screen and (max-width: 478px)
+    
+    .top-menu-container
+        width 100%
+
+    .top-menu-container #top-menu-items-container
+        position absolute
+        background-color grey7
+        z-index -1
+        top -15px
+        width 100%
+        padding 0
+        transition top 0.5s
+
+    .top-menu-container #top-menu-items-container.visible
+        display inherit
+        top 76px
+
+    .top-menu-item
+        display inline-block
+        width 100%
+        text-align center
+        padding-top 15px
+        padding-bottom 15px
+        padding-left 0
+        margin 0 auto
+        color grey3
+        font-weight bold
+
+    .logo-container
+        padding-right 0
+
+    #topmenu .toggle-menu-icon
+        float right
+        display inline-block
+        font-size fontContainerHeader
+        color grey7
+        padding 27px 7.5%
+        padding-left 0
+
+    #topmenu .top-menu-slogan
+        display inline-block
+        margin 0 auto
+        padding 27px 0
+        width 60%
+        position absolute
+        z-index 3
+        text-align center
+        font-size fontContainerHeader
+        color grey7
