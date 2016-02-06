@@ -1,4 +1,5 @@
 var dispatcher = require('./../../scripts/dispatcher.js');
+var helper = require('./../helpers/rest.helper.js');
 
 /*  This store will handle the creation of new grocery items, their deletion
     and their updating of purchased property. */
@@ -7,21 +8,14 @@ function GroceryItemStore(){
     var listeners = [];
     
     // TEMPORARY: this will be replaced with a MongoDB collection
-    var items = [
-        {
-            name: 'Ice Cream'
-        },
-        {
-            name: 'Waffles'
-        },
-        {
-            name: 'Candy',
-            purchased : true
-        },
-        {
-            name: 'Snarks'
-        }
-    ];
+    var items = [];
+    
+    helper.get("/api/items")
+    .then(function(response){
+    console.log('items: ',response)
+        items = response;
+        triggerListeners();
+    })
 
     // Analyse the incoming dispatcher request
     dispatcher.register(function(event){
@@ -42,6 +36,15 @@ function GroceryItemStore(){
             case "delete":
                 deleteGroceryItem(event.payload);
                 break;
+            
+            // Buy Grocery Item
+            case "buy":
+                setGroceryItemBought(event.payload, true);
+                break;
+            
+            case "unbuy":
+                setGroceryItemBought(event.payload, false);
+                break;
             }
         }
     });
@@ -54,12 +57,12 @@ function GroceryItemStore(){
     }
     
     
-    // Get all grocery items
+    // GET all grocery items
     function get(){
         return items;
     }
 
-    // Add a grocery item 
+    // ADD a grocery item 
     function addGroceryItem(item){
         
         // Sotre the item within our array
@@ -69,6 +72,7 @@ function GroceryItemStore(){
         triggerListeners();
     }
     
+    // DELETE a grocery item
     function deleteGroceryItem(item){
         var index;
         
@@ -89,6 +93,21 @@ function GroceryItemStore(){
         
     }
 
+    // SET a grocery item as purchased by changing toggeling "true" and "false"
+    function setGroceryItemBought(item, isBought){
+        
+        // Get the first item where the names match
+        var _item = items.filter(function(a){
+            return a.name == item.name;
+        })[0];
+        
+        // Set the item's purchased to whatever value being passed (catch nulls as false)
+        item.purchased = isBought || false;
+        
+        // Trigger the listeners so that the DOM gets re-rendered
+        triggerListeners();
+    }
+    
     /*  When any change occurs 
         (bound to the public method: "GroceryItemStore.onChange()") */
     function onChange(listener){

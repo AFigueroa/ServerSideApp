@@ -42,10 +42,10 @@ function compile(str, path) {
 app.set('views', __dirname + '/server/views')
     .set('view engine', 'jade')
     .use(logger('dev'))
-    .use(bodyParser.urlencoded({
-        extended: true
-    }))
     .use(bodyParser.json())
+    .use(bodyParser.urlencoded({
+        extended: false
+    }))
     .use(stylus.middleware({
         src: __dirname + '/public',
         compile: compile
@@ -73,8 +73,8 @@ var router = require('./server/scripts/routes.js');
 // API Routes
 var api = require('./server/scripts/routes.api.js');
 
-app.use('/', router);
 app.use('/api', api);
+app.use('/', router);
 
 
 ///// Server Configuration \\\\\

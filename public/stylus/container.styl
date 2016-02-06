@@ -4,6 +4,7 @@
 
 .container
     width 100%
+    min-width 200px
     border-radius 5px
     min-width 250px
     margin 0 auto
@@ -11,11 +12,10 @@
 
 .container *
     margin 0 auto
-    padding 10px 2.5%
     width  95%
-    min-width 200px
-
+    
 .container-header
+    padding 10px 2.5%
     margin-right 0
     background-color grey6
     color: grey3
@@ -27,6 +27,7 @@
     border-top-right-radius inherit
 
 .container .container-body
+    width 100%
     margin-right 0
     background-color grey3;
     color grey6
@@ -47,43 +48,42 @@
     margin  0
     padding 10px 0
     min-height 44px
+    text-align center
+    line-height 0px
 
 .container-list-item:hover
     background-color grey7
     color grey3
-    
-
-.container-list-item:hover .container-list-item-delete button
-    color grey7
 
 .container-list-item div
     line-height 28px
+    padding 10px 0
 
-.container-list-item-delete
+.container-list-item-form
     position absolute
-    top 0
+    width 100%
+    top 15px
+    left 0
+    padding 0
+    text-align left
 
-.container-list-item-delete button
+.container-list-item-form button
     position relative
-    left 75%
+    left 77%
     top 0
     width 5%
     margin 0
-    padding 10px 5px;
-    font-size fontBody
-    min-width 44px
-    border none
-    border-radius 100%
-    border-radius 100%
 
-.container-list-item:hover .container-list-item-delete button:hover
-    background-color #e82805
-    color white
+    z-index 1
+      
+.container-list-item-form:last-of-type button
+    left 0%
 
 .container-form
-    width 100%
+    width 90%
     display inline-block
-    padding 0
+    padding 0 5%
+    padding-bottom 15px
     margin 10px 0 0 0
     margin-right 0
 
@@ -125,11 +125,15 @@
 
 // Smaller than Tablet
 @media screen and (max-width: 478px)
-    .container *
-        text-align center
 
     .input-container input
         text-indent 0
 
-    .container-list-item-delete button
+    .container-list-item-form
+        text-align center
+        
+    .container-list-item-form button
         left 38%
+        
+    .container-list-item-form:last-of-type button
+        left -40%

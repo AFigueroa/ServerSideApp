@@ -18,6 +18,22 @@ module.exports = {
             payload:item,
             type:"grocery-item:delete"
         });
+    },
+    
+    // On BUY event of a grocery item 
+    buy: function(item){
+        dispatcher.dispatch({
+            payload:item,
+            type:"grocery-item:buy"
+        });
+    },
+    
+    // On BUY event of a grocery item 
+    unbuy: function(item){
+        dispatcher.dispatch({
+            payload:item,
+            type:"grocery-item:unbuy"
+        });
     }
     
 };
