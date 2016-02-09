@@ -3,9 +3,6 @@ extends ../includes/layout
 include ./mixins/form-helpers
 
 block main-content
-    #wrapper
-        div(id="topmenu" class="row")
-        div(id="app" class="row")
     form
       mixin field('text', 'name', 'Username')
       mixin field('text', 'email', 'Email')

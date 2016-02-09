@@ -12,7 +12,6 @@ function GroceryItemStore(){
     // Get all items from the
     helper.get("/api/items")
     .then(function(response){
-        console.log(response)
         items = response;
         triggerListeners();
     })

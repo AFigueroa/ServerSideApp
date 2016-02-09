@@ -21,7 +21,7 @@ module.exports = React.createClass({
         <div className="top-menu-container">
             <div className="logo-container">
                 <a href="/">
-                    <img src="./app/images/logo.png" alt="Syne-U Logo" height="65" width="65"/>
+                    <img src="./app/images/logo-tb.png" alt="Syne-U Logo"/>
                 </a>
             </div>
 

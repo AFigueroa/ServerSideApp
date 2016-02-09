@@ -1,5 +1,4 @@
 ///// Routing \\\\\
-
 var express = require('express');
 
 module.exports = (function(){
@@ -15,6 +14,7 @@ module.exports = (function(){
         
     });
     
+
     // "Otherwise" route
     router.get('*', function(req, res) {
 

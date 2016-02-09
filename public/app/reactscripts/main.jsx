@@ -1,4 +1,3 @@
-console.log('JSX main app has loaded.')
 var React = require('react');
 var ReactDOM = require('react-dom');
 
