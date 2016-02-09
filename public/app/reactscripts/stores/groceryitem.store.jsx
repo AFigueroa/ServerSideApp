@@ -98,7 +98,7 @@ function GroceryItemStore(){
         // Trigger listeners to refresh the DOM
         triggerListeners();
         
-        helper.del('api/items/'+ item._id);
+        helper.del('api/items/'+ item.id);
 
     }
 
@@ -116,7 +116,7 @@ function GroceryItemStore(){
         // Trigger the listeners so that the DOM gets re-rendered
         triggerListeners();
 
-        helper.put('api/items/'+item._id, item);
+        helper.put('api/items/'+item.id, item);
     }
     
     /*  When any change occurs 

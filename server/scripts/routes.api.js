@@ -23,6 +23,7 @@ module.exports = (function(){
         });
 
     })
+
     .post('/items', function(req, res){
 
         var item = req.body,
@@ -40,12 +41,13 @@ module.exports = (function(){
         });
 
     })
+
     .delete('/items/:id', function(req, res) {
 
         var itemId = req.params.id;
 
         GroceryItemSchema.findOne({
-            _id : itemId
+            id : itemId
         }).remove(function(err, data){
 
             if(err){
@@ -57,10 +59,11 @@ module.exports = (function(){
         });
 
     })
+
     .put('/items/:id', function(req, res){
 
         GroceryItemSchema.findOne({
-            _id: req.body._id
+            id: req.body.id
         }, function(err, data){
 
             if(data){
