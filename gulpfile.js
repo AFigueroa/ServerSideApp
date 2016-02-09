@@ -138,7 +138,7 @@ gulp.task('bundle-jsx', function () {
     'use strict';
     
     return browserify({
-        entries:  './public/app/reactscripts/main.jsx',
+        entries:  config.browserifyTarget,
         debug: true
     })
         .transform(reactify)

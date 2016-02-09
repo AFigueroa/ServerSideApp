@@ -1,6 +1,7 @@
 ///// Routing \\\\\
 
-var express = require('express');
+var express = require('express'),
+    GroceryItemSchema = require('./../models/groceryitem.model.js');
 
 module.exports = (function(){
 
@@ -8,26 +9,74 @@ module.exports = (function(){
     
     var api = express.Router();
     
-    var items = [
-        {
-            name: 'Ice Cream'
-        },
-        {
-            name: 'Waffles'
-        },
-        {
-            name: 'Candy',
-            purchased : true
-        },
-        {
-            name: 'Snarks'
-        }
-    ];
-
-    // Test Route
+    // Grocery Items Route
     api.get('/items', function(req, res) {
-        console.log('Test API Route has been called');
-        res.send(items);
+
+        GroceryItemSchema.find(function(err, data){
+
+            if(err){
+                res.status(500).send(err);
+            }else{
+                res.status(200).send(data);
+            };
+
+        });
+
+    })
+    .post('/items', function(req, res){
+
+        var item = req.body,
+            groceryItem = new GroceryItemSchema(item);
+
+        groceryItem.save(function(err, data){
+
+            if(err){
+                res.status(500).send(err);
+            }else{
+                res.status(200).send();
+            };
+
+
+        });
+
+    })
+    .delete('/items/:id', function(req, res) {
+
+        var itemId = req.params.id;
+
+        GroceryItemSchema.findOne({
+            _id : itemId
+        }).remove(function(err, data){
+
+            if(err){
+                res.status(500).send(err);
+            }else{
+                res.status(200).send();
+            };
+
+        });
+
+    })
+    .put('/items/:id', function(req, res){
+
+        GroceryItemSchema.findOne({
+            _id: req.body._id
+        }, function(err, data){
+
+            if(data){
+                var property,
+                item = req.body;
+
+                for(property in item){
+                    data[property] = item[property];
+                };
+
+                data.save();
+                res.status(200).send();
+            }
+
+        })
+
     });
     
     return api;

@@ -6,7 +6,6 @@ var express = require('express'),
     io = require('./server/scripts/socket.io.routes.js').listen(http),
     stylus = require('stylus'),
     logger = require('morgan'),
-    mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
@@ -17,17 +16,8 @@ var express = require('express'),
 
 ///// App Configuration \\\\\
 
-// URL to our mongodb
-var url = 'mongodb://localhost:27017/syneschool';
-mongoose.connect(url);
-
-// Test the conection
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function (callback) {
-    'use strict';
-    console.log('Mongoose has connected to the MongoDB database.');
-});
+// Configure the MongoDb using Mongoose
+require('./server/database.js');
 
 // Set the NODE environment value or a default
 var env = process.env.NODE_ENV = process.env.NODE_ENV || "development";

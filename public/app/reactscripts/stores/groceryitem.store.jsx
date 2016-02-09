@@ -1,18 +1,18 @@
 var dispatcher = require('./../../scripts/dispatcher.js');
-var helper = require('./../helpers/rest.helper.js');
+var helper = require('./../helpers/rest.helper.jsx');
+var uuid = require('node-uuid');
 
 /*  This store will handle the creation of new grocery items, their deletion
     and their updating of purchased property. */
 function GroceryItemStore(){
 
-    var listeners = [];
+    var listeners = [],
+        items = [];
     
-    // TEMPORARY: this will be replaced with a MongoDB collection
-    var items = [];
-    
+    // Get all items from the
     helper.get("/api/items")
     .then(function(response){
-    console.log('items: ',response)
+        console.log(response)
         items = response;
         triggerListeners();
     })
@@ -53,7 +53,7 @@ function GroceryItemStore(){
     return{
         // These methods are publicly accessible because of being within the return 
         getItems: get,
-        onChange:onChange
+        onChange: onChange
     }
     
     
@@ -65,11 +65,18 @@ function GroceryItemStore(){
     // ADD a grocery item 
     function addGroceryItem(item){
         
-        // Sotre the item within our array
+        item.id = uuid.v1();
+
+        // Store the item within our array
         items.push(item);
         
         // Trigger the listeners so that the DOM gets re-rendered
         triggerListeners();
+
+        helper.post("api/items", item)
+        .then(function(){
+        // Error Handler
+        });
     }
     
     // DELETE a grocery item
@@ -91,6 +98,8 @@ function GroceryItemStore(){
         // Trigger listeners to refresh the DOM
         triggerListeners();
         
+        helper.del('api/items/'+ item._id);
+
     }
 
     // SET a grocery item as purchased by changing toggeling "true" and "false"
@@ -106,6 +115,8 @@ function GroceryItemStore(){
         
         // Trigger the listeners so that the DOM gets re-rendered
         triggerListeners();
+
+        helper.put('api/items/'+item._id, item);
     }
     
     /*  When any change occurs 
