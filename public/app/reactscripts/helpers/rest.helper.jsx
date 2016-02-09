@@ -46,6 +46,10 @@ module.exports = {
                 error:error
             })
         });
+    },
+
+    emit: function(key, data){
+        socket.emit(key, data);
     }
 
 };

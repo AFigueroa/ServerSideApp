@@ -5,7 +5,12 @@ module.exports.listen = function (app) {
     io = socketio.listen(app);
 
     io.on('connection', function (socket) {
-        console.log('A user has connected to Sockets.io');
+
+        // New Grocery Item
+        socket.on('new-grocery-item', function(item){
+            io.emit('new-grocery-item', item);
+        });
+
     });
 
     return io;

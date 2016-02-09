@@ -2,11 +2,24 @@
 var React = require('react'),
     GroceryItem = require('./groceryitem.component.jsx'),
     GroceryAddItem = require('./groceryadditem.component.jsx'),
-    groceryItemStore = require('./../../stores/groceryitem.store.jsx');
+    port = '8080',
+    socket = io('ws://localhost:' + port);
 
 // Grocery List Component
 module.exports = React.createClass({
+    componentDidMount() {
+        socket.on('new-grocery-item', this._pushGroceryItem);
+    },
+    _pushGroceryItem: function(item){
+        console.log(item);
+        var items = this.props.items;
 
+        items.push(item);
+
+        this.setState({
+            items: items
+        })
+    },
     render: function(){
         return (
         <div className="row">

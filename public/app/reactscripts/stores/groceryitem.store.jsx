@@ -72,9 +72,8 @@ function GroceryItemStore(){
         // Trigger the listeners so that the DOM gets re-rendered
         triggerListeners();
 
-        helper.post("api/items", item)
-        .then(function(){
-        // Error Handler
+        helper.post("api/items", item).then(function(err, data){
+           helper.emit('new-grocery-item', item);
         });
     }
     
@@ -131,6 +130,10 @@ function GroceryItemStore(){
             listener(items);
         });
     }
+
+    socket.on('new-grocery-item', function(item){
+        console.log(item.name)
+    });
 }
 
 // Export the GroceryItemStore to have it's returned methods publicly available
