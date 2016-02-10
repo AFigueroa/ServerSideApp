@@ -23,7 +23,9 @@ var topMenuItems = [
 var groceryItems = groceryItemStore.getItems();
 
 // This function is used to re-render the grocery list after a state change
-function renderGroceryList(){
+function renderGroceryList() {
+
+    'use strict';
 
     // Render the app's main view
     ReactDOM.render(<GroceryItemList items={groceryItems}/>, app)

@@ -1,7 +1,6 @@
 var module;
 
 module.exports = function () {
-  
     'use strict';
     
     var client = "./public/",

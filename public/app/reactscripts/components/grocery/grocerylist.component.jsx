@@ -7,19 +7,47 @@ var React = require('react'),
 
 // Grocery List Component
 module.exports = React.createClass({
-    componentDidMount() {
-        socket.on('new-grocery-item', this._pushGroceryItem);
-    },
-    _pushGroceryItem: function(item){
-        console.log(item);
-        var items = this.props.items;
 
+    // Runs on before the template is render
+    componentDidMount( ) {
+
+        // Activate socket listener for new items
+        socket.on('new-grocery-item', this._pushGroceryItem);
+
+    },
+
+    // Updates the state of our items on a socket new-grocery-item event
+    _pushGroceryItem: function (item) {
+
+        // Dependencies
+        var items = this.props.items,
+            itemsLength = items.length,
+            index=0;
+
+        // Check if this receptor is the sender of the new item, in which case do not update the state
+        for(index; index < itemsLength; index++){
+
+            // Do id's match?
+            if(items[index].id == item.id){
+
+                // Do not insert
+                return;
+            }
+        };
+
+        // No Duplicates...
+
+        // Push the item to the representative array
         items.push(item);
 
+        // Update the state of items to be our representative array
         this.setState({
             items: items
-        })
+        });
+
     },
+
+    // Render the template
     render: function(){
         return (
         <div className="row">

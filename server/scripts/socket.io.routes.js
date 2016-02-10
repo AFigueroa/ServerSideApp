@@ -8,7 +8,7 @@ module.exports.listen = function (app) {
 
         // New Grocery Item
         socket.on('new-grocery-item', function(item){
-            io.emit('new-grocery-item', item);
+            socket.broadcast.emit('new-grocery-item', item);
         });
 
     });

@@ -4,27 +4,29 @@ var uuid = require('node-uuid');
 
 /*  This store will handle the creation of new grocery items, their deletion
     and their updating of purchased property. */
-function GroceryItemStore(){
+function GroceryItemStore () {
+    'use strict';
 
     var listeners = [],
         items = [];
     
-    // Get all items from the
-    helper.get("/api/items")
-    .then(function(response){
+    // Get all items from the server
+    helper.get("/api/items").then(function (response) {
+
         items = response;
         triggerListeners();
-    })
+
+    });
 
     // Analyse the incoming dispatcher request
-    dispatcher.register(function(event){
+    dispatcher.register(function (event) {
         
         // split the string by key ":"
         var split = event.type.split(':');
         
         // Now, check which action the payload belongs too
-        if(split[0] === 'grocery-item'){
-            switch(split[1]){
+        if (split[0] === 'grocery-item') {
+            switch (split[1]) {
             
             // Add Grocery Item
             case "add":
@@ -40,7 +42,8 @@ function GroceryItemStore(){
             case "buy":
                 setGroceryItemBought(event.payload, true);
                 break;
-            
+
+            // Unbuy Grocery Item
             case "unbuy":
                 setGroceryItemBought(event.payload, false);
                 break;
@@ -49,21 +52,22 @@ function GroceryItemStore(){
     });
 
     // Serve the current state of the grocery items 
-    return{
+    return {
         // These methods are publicly accessible because of being within the return 
         getItems: get,
         onChange: onChange
-    }
+    };
     
     
     // GET all grocery items
-    function get(){
+    function get () {
         return items;
     }
 
     // ADD a grocery item 
-    function addGroceryItem(item){
+    function addGroceryItem(item) {
         
+        // Generate a unique id for our new item
         item.id = uuid.v1();
 
         // Store the item within our array
@@ -72,23 +76,23 @@ function GroceryItemStore(){
         // Trigger the listeners so that the DOM gets re-rendered
         triggerListeners();
 
-        helper.post("api/items", item).then(function(err, data){
-           helper.emit('new-grocery-item', item);
+        helper.post("api/items", item).then(function (err, data) {
+            helper.emit('new-grocery-item', item);
         });
     }
     
     // DELETE a grocery item
-    function deleteGroceryItem(item){
+    function deleteGroceryItem(item) {
         var index;
         
         // Find the index of the item to be deleted
-        items.filter(function(_item, _index){
+        items.filter(function (_item, _index) {
         
         //If names match, the index is this item's index
-            if(_item.name == item.name){
-                index= _index
+            if (_item.name == item.name) {
+                index = _index;
             }
-        })
+        });
         
         // With the index, now remove the item from our array
         items.splice(index, 1);
@@ -96,16 +100,17 @@ function GroceryItemStore(){
         // Trigger listeners to refresh the DOM
         triggerListeners();
         
-        helper.del('api/items/'+ item.id);
+        // Call on the helper to dispatch a request to delete the item
+        helper.del('api/items/' + item.id);
 
     }
 
     // SET a grocery item as purchased by changing toggeling "true" and "false"
-    function setGroceryItemBought(item, isBought){
+    function setGroceryItemBought(item, isBought) {
         
         // Get the first item where the names match
-        var _item = items.filter(function(a){
-            return a.name == item.name;
+        var _item = items.filter(function (a) {
+            return a.name === item.name;
         })[0];
         
         // Set the item's purchased to whatever value being passed (catch nulls as false)
@@ -114,26 +119,23 @@ function GroceryItemStore(){
         // Trigger the listeners so that the DOM gets re-rendered
         triggerListeners();
 
-        helper.put('api/items/'+item.id, item);
+        helper.put('api/items/' + item.id, item);
     }
     
     /*  When any change occurs 
         (bound to the public method: "GroceryItemStore.onChange()") */
-    function onChange(listener){
+    function onChange(listener) {
         // Refresh the DOM
         listeners.push(listener);
     }
 
     //@triggerListeners : Refreshes the data to cause the DOM to re-render
-    function triggerListeners(){
-        listeners.forEach(function(listener){
+    function triggerListeners() {
+        listeners.forEach(function (listener) {
             listener(items);
         });
     }
 
-    socket.on('new-grocery-item', function(item){
-        console.log(item.name)
-    });
 }
 
 // Export the GroceryItemStore to have it's returned methods publicly available

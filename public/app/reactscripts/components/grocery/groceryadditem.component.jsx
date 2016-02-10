@@ -4,13 +4,20 @@ var action = require('./actions/groceryitem.actions.jsx');
 
 // Grocery Item Component
 module.exports = React.createClass({
-    getInitialState: function(){
+
+    // Defines the our View Model
+    getInitialState: function () {
+        'use strict';
+
         return {
-            input:""
+            input: ""
         };
         
     },
-    handleInputName: function(e){
+
+    // This methods updates the state of our input variable as the user types
+    handleInputName: function (e) {
+        'use strict';
         
         //To update the state of an object ALWAYS use this.setState()
         this.setState({
@@ -18,20 +25,27 @@ module.exports = React.createClass({
         });
 
     },
-    addItem: function(e){
+
+    // On submit event, this method uses the action to call on the dispatcher and send the value to the server
+    addItem: function (e) {
+        'use strict';
         
+        // Prevent the default behaviour on submit event
         e.preventDefault();
 
+        // Call on the add action and pass it the value of input
         action.add({
             name: this.state.input
         });
 
+        // Reset the input's value to a empty string
         this.setState({
-            input:''
-        })
+            input: ''
+        });
 
     },
-    render: function(){
+    render: function () {
+        'use strict';
         
         return (
 
@@ -47,7 +61,6 @@ module.exports = React.createClass({
                 </div>
 
             </form>
-               
 
         )
         

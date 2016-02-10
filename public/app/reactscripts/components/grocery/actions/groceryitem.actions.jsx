@@ -5,34 +5,42 @@ var dispatcher = require('./../../../../scripts/dispatcher.js');
 module.exports = {
 
     // On ADD grocery item event 
-    add: function(item){
+    add: function (item) {
+        'use strict';
+
         dispatcher.dispatch({
-            payload:item,
-            type:"grocery-item:add"
+            payload: item,
+            type: "grocery-item:add"
         });
     },
     
     // On DELETE grocery item event 
-    delete: function(item){
+    del: function (item) {
+        'use strict';
+
         dispatcher.dispatch({
-            payload:item,
-            type:"grocery-item:delete"
+            payload: item,
+            type: "grocery-item:delete"
         });
     },
     
     // On BUY event of a grocery item 
-    buy: function(item){
+    buy: function (item) {
+        'use strict';
+
         dispatcher.dispatch({
-            payload:item,
-            type:"grocery-item:buy"
+            payload: item,
+            type: "grocery-item:buy"
         });
     },
     
-    // On BUY event of a grocery item 
-    unbuy: function(item){
+    // On UNBUY event of a grocery item
+    unbuy: function (item) {
+        'use strict';
+
         dispatcher.dispatch({
-            payload:item,
-            type:"grocery-item:unbuy"
+            payload: item,
+            type: "grocery-item:unbuy"
         });
     }
     

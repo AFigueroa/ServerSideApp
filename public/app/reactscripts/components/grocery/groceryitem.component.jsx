@@ -4,20 +4,43 @@ var action = require('./actions/groceryitem.actions.jsx');
 
 // Grocery Item Component
 module.exports = React.createClass({
-    delete: function(e){
+
+    // Delete Grocery Item
+    deleteGroceryItem: function (e) {
+        'use strict';
+
+        // Disable onSubmit default actions
         e.preventDefault();
-        action.delete(this.props.item);
+
+        // Call on the actions and ask them to dispatch a delete event for this item
+        action.del(this.props.item);
+
     },
-    togglePurchased: function(e){
+
+    // Update Grocery Item
+    togglePurchased: function (e) {
+        'use strict';
+
+        // Disable onSubmit default actions
         e.preventDefault();
         
-        if(this.props.item.purchased){
+        // Depending on the state of the item, dispatch an action to buy or unbuy the item
+        if (this.props.item.purchased) {
+
+            // Unbuy Event
             action.unbuy(this.props.item);
-        }else{
+
+        } else {
+
+            // Buy event
             action.buy(this.props.item);
+
         }
     },
-    render: function(){
+
+    // Render the template
+    render: function () {
+        'use strict';
         
         return (
             <div className="container-list-item">
@@ -32,7 +55,7 @@ module.exports = React.createClass({
                     </button>
                 </form>
                 
-                <form className="container-list-item-form" onSubmit={this.delete}>
+                <form className="container-list-item-form" onSubmit={this.deleteGroceryItem}>
                     <button className="button-danger">&times;</button>
                 </form>
                 
