@@ -14,7 +14,7 @@
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
     "jade": "^1.11.0",
-    "mongoose": "^4.3.3",
+    "mongoose": "^5.12.2",
     "morgan": "^1.6.1",
     "node-uuid": "^1.4.7",
     "passport": "^0.3.2",
